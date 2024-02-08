@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jetstream", "jetstream", "{33D9F0C5-1790-4E3F-882B-910A314B09C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "messaging", "messaging", "{2399CD9A-2335-417E-8E05-408F385246F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorePublishSubscribe", "messaging\CorePublishSubscribe\CorePublishSubscribe.csproj", "{80251694-A397-48A7-A485-3A3180724AE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{A06DD267-8A4B-4895-9E83-C7DEBAE4613B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80251694-A397-48A7-A485-3A3180724AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80251694-A397-48A7-A485-3A3180724AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80251694-A397-48A7-A485-3A3180724AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80251694-A397-48A7-A485-3A3180724AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A06DD267-8A4B-4895-9E83-C7DEBAE4613B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A06DD267-8A4B-4895-9E83-C7DEBAE4613B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A06DD267-8A4B-4895-9E83-C7DEBAE4613B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A06DD267-8A4B-4895-9E83-C7DEBAE4613B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{80251694-A397-48A7-A485-3A3180724AE3} = {2399CD9A-2335-417E-8E05-408F385246F8}
+	EndGlobalSection
+EndGlobal
