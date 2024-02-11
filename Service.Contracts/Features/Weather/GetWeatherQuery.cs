@@ -2,7 +2,7 @@
 
 namespace Service.Contracts.Features.Weather;
 
-public class GetWeatherQuery(string city) : IRequest<WeatherResponse>
+public class GetWeatherQuery(string city) : IRequest<Weather>
 {
     
 }

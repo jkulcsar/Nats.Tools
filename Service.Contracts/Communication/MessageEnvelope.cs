@@ -25,7 +25,7 @@ public record MessageEnvelope()
         var type = Type.GetType(DataType) ?? throw new NotSupportedException("Type not found");
         var data = JsonSerializer.Deserialize(SerializedData, type, DefaultJsonSerializerOptions.Default) ??
                    throw new NotSupportedException("Could not deserialize message");
-        if (data is not IBaseRequest or INotification)
+        if (data is not (IRequest or INotification))
         {
             throw new NotSupportedException("Not Mediatr format");
         }

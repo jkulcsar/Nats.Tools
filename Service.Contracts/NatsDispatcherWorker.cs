@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NATS.Client.Core;
 using NATS.Client.Serializers.Json;
 using Service.Contracts.Communication;
+using Service.Contracts.Features.Weather;
 
 namespace Service.Contracts;
 
@@ -24,9 +25,9 @@ public class NatsDispatcherWorker(INatsConnection nats, IMediator mediator, ILog
             try
             {
                 var messages =
-                    nats.SubscribeAsync<MessageEnvelope>(
+                    nats.SubscribeAsync(
                         subject: ">", 
-                        serializer: new NatsJsonSerializer<MessageEnvelope>(DefaultJsonSerializerOptions.Default),
+                        serializer: new NatsJsonSerializer<MessageEnvelope?>(DefaultJsonSerializerOptions.Default),
                         cancellationToken: stoppingToken);
 
                 await Parallel.ForEachAsync(
@@ -35,22 +36,27 @@ public class NatsDispatcherWorker(INatsConnection nats, IMediator mediator, ILog
                     async (message, cancellationToken) =>
                     {
                         var data = message.Data?.GetData();
+                        var dataTypeName = data?.GetType().Name ?? "null";
 
                         switch (data)
                         {
                             case INotification notification:
                                 await mediator.Publish(notification, cancellationToken);
                                 break;
+                            
                             case IRequest request:
                                 await mediator.Send(request, cancellationToken);
                                 await message.ReplyAsync(cancellationToken: cancellationToken);
                                 break;
+                            
                             case IBaseRequest replyRequest:
                                 var result = await mediator.Send(replyRequest, cancellationToken);
                                 await message.ReplyAsync(
-                                    data: result, 
+                                    data: result,
+                                    //replyTo: replyRequest.ReplyTo,
                                     cancellationToken: cancellationToken);
                                 break;
+                            
                             default:
                                 throw new NotSupportedException("Something went wrong");
                         }

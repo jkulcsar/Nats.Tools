@@ -8,18 +8,20 @@ using Microsoft.Extensions.Logging;
 using Service.Contracts;
 
 
-var builder = CoconaApp.CreateBuilder();
+var host = Host.CreateApplicationBuilder(args);
 
- builder.Services.AddCommunication();
- builder.Services.AddTtmHostedServices();
- builder.Services.AddSingleton<IPublisherService, SimplePublisherService>();
- builder.Services.AddSingleton<ISubscriberService, SimpleSubscriberService>();
- builder.Services.AddLogging(configure => configure.AddConsole());
+host.Services.AddCommunication();
+host.Services.AddMediatR(options =>
+{
+    options.RegisterServicesFromAssemblyContaining<Program>();
+});
+host.Services.AddTtmHostedServices();
+host.Services.AddSingleton<IPublisherService, SimplePublisherService>();
+host.Services.AddSingleton<ISubscriberService, SimpleSubscriberService>();
+host.Services.AddLogging(configure => configure.AddConsole());
 
- var app = builder.Build();
+host.Services.AddHostedService<ScenarioRunner>();
 
-app.AddCommands<RunCommands>();
+var app = host.Build();
 
-app.RunAsync();
-
-
+await app.RunAsync();

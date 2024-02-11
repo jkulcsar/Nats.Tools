@@ -8,7 +8,7 @@ class SimpleSubscriberService(INatsConnection natsConnection, ILogger<SimpleSubs
 {
     public async Task<Task> ListenToSubject(string subject, CancellationToken cancellationToken)
     {
-        await using var sub = await natsConnection.SubscribeCoreAsync<WeatherResponse>(subject, cancellationToken: cancellationToken);
+        await using var sub = await natsConnection.SubscribeCoreAsync<Weather>(subject, cancellationToken: cancellationToken);
         
         logger.LogInformation("Waiting for messages...");
         

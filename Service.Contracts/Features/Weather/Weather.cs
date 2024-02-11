@@ -1,10 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using MediatR;
 
 namespace Service.Contracts.Features.Weather;
 
-public class WeatherResponse
+public class Weather
 {
-    [JsonPropertyName("main")] public OpenWeatherMapWeather Weather { get; set; }
+    [JsonPropertyName("main")] public OpenWeatherMapWeather? OpenWeatherMapWeather { get; set; }
 
     [JsonPropertyName("visibility")] public int Visibility { get; set; }
 

@@ -4,5 +4,5 @@ namespace CorePublishSubscribe.Publisher;
 
 public interface IPublisherService
 {
-    IAsyncEnumerable<WeatherResponse?> PublishRandomMessages(int numberOfMessages);
+    IAsyncEnumerable<Weather?> PublishRandomMessages(int numberOfMessages);
 }

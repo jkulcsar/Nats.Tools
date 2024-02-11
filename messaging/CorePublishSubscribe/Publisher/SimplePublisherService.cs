@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using NATS.Client.Core;
+using Service.Contracts.Communication;
 using Service.Contracts.Features.Weather;
 
 namespace CorePublishSubscribe.Publisher;
 
 public class SimplePublisherService(INatsConnection natsConnection, ILogger<SimplePublisherService> logger) : IPublisherService
 {
-    public async IAsyncEnumerable<WeatherResponse?> PublishRandomMessages(int numberOfMessages)
+    public async IAsyncEnumerable<Weather?> PublishRandomMessages(int numberOfMessages)
     {
         var cities = new[] {"London", "Paris", "New York", "Berlin", "Tokyo", "Sydney", "Beijing", "Moscow", "Cairo", "Rome"};
         var random = new Random();
@@ -14,9 +15,10 @@ public class SimplePublisherService(INatsConnection natsConnection, ILogger<Simp
         {
             var city = cities[random.Next(cities.Length)];
             var weather = await GetWeatherForCity(city);
-            logger.LogInformation($"Weather in {weather.Name}: {weather.Weather.Temp}°C");
-            
-            await natsConnection.PublishAsync($"weather.{weather.Name}", weather);
+            logger.LogInformation($"OpenWeatherMapWeather in {weather.Name}: {weather.OpenWeatherMapWeather.Temp}°C");
+
+            var weatherNotification = MessageEnvelope.CreateNotificationMessage(new WeatherNotification{ Weather = weather });
+            await natsConnection.PublishAsync($"weather.{weather.Name}", weatherNotification);
             
             await Task.Delay(500);
 
@@ -24,7 +26,7 @@ public class SimplePublisherService(INatsConnection natsConnection, ILogger<Simp
         }
     }
 
-    private Task<WeatherResponse> GetWeatherForCity(string city)
+    private Task<Weather> GetWeatherForCity(string city)
     {
         // generate random weather data for the city
         var random = new Random();
@@ -35,9 +37,9 @@ public class SimplePublisherService(INatsConnection natsConnection, ILogger<Simp
         var pressure = random.Next(900, 1100);
         var humidity = random.Next(0, 100);
         
-        return Task.FromResult(new WeatherResponse
+        return Task.FromResult(new Weather
         {
-            Weather = new OpenWeatherMapWeather
+            OpenWeatherMapWeather = new OpenWeatherMapWeather
             {
                 Temp = temp,
                 FeelsLike = feelsLike,

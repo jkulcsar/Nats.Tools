@@ -16,10 +16,6 @@ public static class ServiceBuilderExtensions
     {
         // Order is important here as services are started sequentially
         services.AddHostedService<NatsDispatcherWorker>();
-        services.AddMediatR(options =>
-        {
-            options.RegisterServicesFromAssemblyContaining<Program>()
-        });
         return services;
     }
     
