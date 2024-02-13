@@ -1,5 +1,4 @@
-﻿using Cocona;
-using CorePublishSubscribe;
+﻿using CorePublishSubscribe;
 using CorePublishSubscribe.Publisher;
 using CorePublishSubscribe.Subscriber;
 using Microsoft.Extensions.DependencyInjection;

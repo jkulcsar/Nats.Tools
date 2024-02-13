@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using MediatR;
 
 namespace Service.Contracts.Features.Weather;
 

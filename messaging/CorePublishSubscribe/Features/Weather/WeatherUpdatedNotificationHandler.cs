@@ -11,7 +11,7 @@ public class WeatherUpdatedNotificationHandler(ILogger<WeatherUpdatedNotificatio
     {
         if (weatherNotification.Weather.OpenWeatherMapWeather != null)
             logger.LogInformation(
-                $"Weather updated: {weatherNotification.Weather.Name} is now {weatherNotification.Weather.OpenWeatherMapWeather.Temp} degrees.");
+                $"Weather updated: In {weatherNotification.Weather.Name} now: {weatherNotification.Weather.OpenWeatherMapWeather.Temp} °C.");
 
         return Task.CompletedTask;
     }

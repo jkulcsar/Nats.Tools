@@ -12,6 +12,7 @@
       <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
       <PackageReference Include="NATS.Client.Hosting" Version="2.0.3" />
+      <PackageReference Include="NATS.Client.JetStream" Version="2.1.0" />
       <PackageReference Include="NATS.Client.Serializers.Json" Version="2.0.3" />
     </ItemGroup>
 
