@@ -1,0 +1,16 @@
+version: "3.5"
+services:
+  nats-single:
+    container_name: nats-single
+    image: nats
+    ports:
+      - "4222:4222" # Expose the NATS server port
+      - "8222:8222" # Expose the HTTP management port
+      - "6222:6222" # Expose the cluster (aka. routes) port
+    command: "-js --sd /data"  # Enable JetStream and persist the data in the /data directory
+    volumes:
+      - ./data:/data # Persist the NATS server data
+      
+networks:
+  default:
+    name: nats-network

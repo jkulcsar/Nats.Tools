@@ -1,0 +1,32 @@
+version: "3.5"
+services:
+  nats-1:
+    image: nats
+    ports:
+      - "4222:4222" # Expose the NATS server port
+      - "8222:8222" # Expose the HTTP management port
+      - "6222:6222" # Expose the cluster (aka. routes) port
+    command: "--jetstream --cluster_name nats-jetstream-cluster --server_name nats-1 --cluster nats://0.0.0.0:6222 --routes=nats://ruser:T0pS3cr3t@nats-3:6222 --http_port 8222"
+    volumes:
+      - ./data:/data
+    networks: ["nats-network"]
+
+  nats-2:
+    image: nats
+    command: "--jetstream --cluster_name nats-jetstream-cluster --server_name nats-2 --cluster nats://0.0.0.0:6222 --routes=nats://ruser:T0pS3cr3t@nats-1:6222"
+    volumes:
+      - ./data:/data
+    networks: ["nats-network"]
+    depends_on: ["nats-1"]
+
+  nats-3:
+    image: nats
+    command: "--jetstream --cluster_name nats-jetstream-cluster --server_name nats-3 --cluster nats://0.0.0.0:6222 --routes=nats://ruser:T0pS3cr3t@nats-2:6222"
+    volumes:
+      - ./data:/data
+    networks: ["nats-network"]
+    depends_on: ["nats-1"]
+
+networks:
+  nats-network:
+    name: nats-network
