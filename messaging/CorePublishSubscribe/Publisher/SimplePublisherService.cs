@@ -9,7 +9,7 @@ public class SimplePublisherService(INatsConnection natsConnection, ILogger<Simp
 {
     public async IAsyncEnumerable<Weather?> PublishRandomMessages(int numberOfMessages)
     {
-        var cities = new[] {"London", "Paris", "New York", "Berlin", "Tokyo", "Sydney", "Beijing", "Moscow", "Cairo", "Rome"};
+        var cities = new[] {"London", "Paris", "Miami", "Berlin", "Tokyo", "Sydney", "Beijing", "Moscow", "Cairo", "Rome"};
         var random = new Random();
         for (var i = 0; i < numberOfMessages; i++)
         {
